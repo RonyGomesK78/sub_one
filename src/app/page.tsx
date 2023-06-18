@@ -1,5 +1,13 @@
+import { Header } from "@/components/Header";
+
 export default function Home() {
   return (
-    <h1>Sub One</h1>
+    <>
+      <Header />
+
+      <div>
+        THE CONTENT OF THE APP GOES HERE
+      </div>
+    </>
   )
 }
