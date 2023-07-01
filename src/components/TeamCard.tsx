@@ -4,7 +4,7 @@ import Link from 'next/link';
 interface Team {
   name: string;
   image: StaticImageData;
-  playersLink?: string;
+  teamLink: string;
 }
 
 export function TeamCard(props: Team) {
@@ -12,12 +12,13 @@ export function TeamCard(props: Team) {
   const {
     name,
     image,
+    teamLink,
   } = props;
 
   return (
-    <div className='relative rounded-md drop-shadow-lg'>
+    <div className='relative rounded-md shadow-lg'>
       <Link
-        href='/'
+        href={teamLink}
         className='rounded-md'
       >
         <Image
