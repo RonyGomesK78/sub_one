@@ -1,4 +1,7 @@
-export function EmptyPlayers() {
+import { MouseEventHandler } from "react";
+
+export function EmptyPlayers(props: { handleOpenModal: MouseEventHandler<HTMLButtonElement>; }) {
+  const { handleOpenModal } = props;
   return (
     <div className="flex flex-col items-center justify-center h-screen gap-8">
       <h2
@@ -8,6 +11,7 @@ export function EmptyPlayers() {
       </h2>
       <button
         className="bg-red-700 text-white p-3 rounded-md hover:bg-red-600"
+        onClick={handleOpenModal}
       >
         Adicionar Jogador
       </button>
