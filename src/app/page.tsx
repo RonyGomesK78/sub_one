@@ -6,7 +6,7 @@ import sub13Image from "../assets/sub13.jpg";
 export default function Home() {
   return (
     <>
-      <div className="grid sm:grid-cols-2 gap-6 2xl:mx-80 mx-2 p-4">
+      <div className="grid sm:grid-cols-2 gap-6 xl:mx-80 mx-2 p-4">
         <TeamCard
           name="FEMININO"
           image={femaleImage}
