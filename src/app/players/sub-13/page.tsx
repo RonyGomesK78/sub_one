@@ -7,6 +7,7 @@ import PlayerForm from "@/components/PlayerForm";
 import PlayersTable from "@/components/PlayersTable";
 
 import getAge from "../../../utils/getYear";
+import PlayerDetails from "@/components/PlayerDetails";
 
 interface Player {
   name: string;
@@ -30,7 +31,15 @@ interface PlayerSubmitInfo {
 export default function Sub13() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [players, setPlayers] = useState<Player[]>([]);
+  const [isPlayerDetailsOpen, setIsPlayerDetailOpen] = useState(false);
+  const [players, setPlayers] = useState<Player[]>([
+    {
+      age: '18',
+      name: 'Romilton Gomes',
+      genre: 'M',
+      average: '5'
+    }
+  ]);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -40,6 +49,7 @@ export default function Sub13() {
     setIsModalOpen(false);
   }
 
+  
   const addPlayer = (player: PlayerSubmitInfo) => {
     setIsModalOpen(false);
     const newPlayer: Player = {
@@ -50,6 +60,14 @@ export default function Sub13() {
       position: '-',
     }
     setPlayers([...players, newPlayer]);
+  }
+
+  const handlePlayerDetailsOpen = () => {
+    setIsPlayerDetailOpen(true);
+  }
+
+  const handlePlayerDetailsClose = () => {
+    setIsPlayerDetailOpen(false);
   }
 
   if (players.length === 0) {
@@ -90,6 +108,7 @@ export default function Sub13() {
       <div className="overflow-x-auto shadow-inner xl:mx-80 m-4">
         <PlayersTable 
           players={players}
+          handlePlayerDetailOpen={handlePlayerDetailsOpen}
         />
       </div>
 
@@ -98,6 +117,14 @@ export default function Sub13() {
           <PlayerForm 
             handleCloseModal={handleCloseModal}
             addPlayer={addPlayer}
+          />
+        )
+      }
+
+      {
+        !isModalOpen && isPlayerDetailsOpen && (
+          <PlayerDetails
+            handlePlayerDetailsClose={handlePlayerDetailsClose}
           />
         )
       }
