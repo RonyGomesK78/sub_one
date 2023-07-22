@@ -6,15 +6,19 @@ interface Players {
   position?: string
 }
 
-export default function PlayersTable(props: { players: Players[]; }) {
-  const { players } = props;
+export default function PlayersTable(props: { players: Players[]; handlePlayerDetailOpen: any }) {
+  const { players, handlePlayerDetailOpen } = props;
 
   const tableBody = () => {
     return players.map((player, index) => {
       const averageColor = Number(player?.average) > 9 ? "text-green-500" : "text-red-500";
 
       return (
-        <tr key={index} className="bg-gray-100 border-white border-y-8 cursor-pointer hover:bg-gray-200">
+        <tr 
+          key={index} 
+          className="bg-gray-100 border-white border-y-8 cursor-pointer hover:bg-gray-200"
+          onClick={handlePlayerDetailOpen}
+        >
           <td className="text-left whitespace-nowrap px-3 py-8">
             {player.genre}
           </td>

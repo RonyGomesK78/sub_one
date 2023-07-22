@@ -1,6 +1,7 @@
 "use client";
 
 import { MouseEventHandler, useState } from "react";
+import { CustomeButton } from "./CustomButton";
 
 interface PlayerSubmitInfo {
   name: string;
@@ -191,17 +192,19 @@ export default function PlayerForm(props: Props) {
                 </div>
               </div>
 
-              <div className="flex justify-end gap-2 border-t-2 w-100 mt-10 pt-8">
-                <button
-                  className="bg-gray-500 xl:p-3 p-2 rounded text-white hover:bg-gray-700"
-                  onClick={handleCloseModal}
-                >
-                  Cancelar
-                </button>
-                <button
+              <div className="flex justify-end gap-2 border-t-2 w-100 mt-10 py-8">
+                <CustomeButton
+                  color="bg-gray-500"
+                  secondaryColor='bg-gray-700'
+                  message="Cancelar"
+                  handleOnClick={handleCloseModal}
+                />
+                <CustomeButton
+                  color="bg-red-500"
+                  secondaryColor='bg-red-700'
+                  message="Adicionar"
                   type="submit"
-                  className="bg-red-600 xl:p-3 p-2 rounded text-white  hover:bg-red-700"
-                >Adicionar</button>
+                />
               </div>
             </form>
           </div>
