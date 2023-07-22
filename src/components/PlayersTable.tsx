@@ -19,19 +19,19 @@ export default function PlayersTable(props: { players: Players[]; handlePlayerDe
           className="bg-gray-100 border-white border-y-8 cursor-pointer hover:bg-gray-200"
           onClick={handlePlayerDetailOpen}
         >
-          <td className="text-left whitespace-nowrap px-3 py-8">
+          <td className="text-left whitespace-nowrap p-8">
             {player.genre}
           </td>
-          <td className="text-left whitespace-nowrap px-3 py-8">
+          <td className="text-center whitespace-nowrap px-3">
             {player.name}
           </td>
-          <td className="text-left whitespace-nowrap px-3 py-8">
+          <td className="text-center whitespace-nowrap px-3">
             {player.age}
           </td>
-          <td className="text-left whitespace-nowrap px-3 py-8">
+          <td className="text-center whitespace-nowrap px-3">
             {player?.position}
           </td>
-          <td className={`text-left whitespace-nowrap px-3 py-8 ${averageColor}`}>
+          <td className={`text-right whitespace-nowrap px-4 pr-8 ${averageColor}`}>
             {player.average}
           </td>
         </tr>
@@ -42,12 +42,12 @@ export default function PlayersTable(props: { players: Players[]; handlePlayerDe
   return (
     <table className="table-auto w-full">
       <thead>
-        <tr className="text-gray-400">
-          <th className="text-left p-3">SEXO</th>
-          <th className="text-left whitespace-nowrap p-3">NOME</th>
-          <th className="text-left whitespace-nowrap p-3">IDADE</th>
-          <th className="text-left whitespace-nowrap p-3">POSIÇÃO</th>
-          <th className="text-left whitespace-nowrap p-3">CLASSIFICAÇÃO</th>
+        <tr className="text-gray-400 ">
+          <th className="text-left pl-8 pt-3 align-middle">SEXO</th>
+          <th className="whitespace-nowrap pt-3 px-4">NOME</th>
+          <th className="whitespace-nowrap pt-3 px-4">IDADE</th>
+          <th className="whitespace-nowrap pt-3 px-4">POSIÇÃO</th>
+          <th className="text-right whitespace-nowrap pt-3 px-4 pr-8">CLASSIFICAÇÃO</th>
         </tr>
       </thead>
 
