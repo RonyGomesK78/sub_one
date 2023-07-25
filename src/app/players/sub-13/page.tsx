@@ -5,9 +5,12 @@ import { useState } from "react";
 import { EmptyPlayers } from "@/components/EmptyPlayers";
 import PlayerForm from "@/components/PlayerForm";
 import PlayersTable from "@/components/PlayersTable";
+import PlayerDetails from "@/components/PlayerDetails";
 
 import getAge from "../../../utils/getYear";
-import PlayerDetails from "@/components/PlayerDetails";
+import compareSkill from "@/utils/compareSkill";
+
+import { Skill, Skills } from "@/utils/mockedSkills";
 
 interface Player {
   name: string;
@@ -70,6 +73,12 @@ export default function Sub13() {
     setIsPlayerDetailOpen(false);
   }
 
+  const submitPlayerSkill = (values: Skills) => {
+ 
+    console.log(compareSkill(Skill, values));
+    setIsPlayerDetailOpen(false);
+  }
+
   if (players.length === 0) {
     return (
       <>
@@ -87,7 +96,6 @@ export default function Sub13() {
       </>
     )
   }
-
 
   return (
     <>
@@ -111,7 +119,7 @@ export default function Sub13() {
           handlePlayerDetailOpen={handlePlayerDetailsOpen}
         />
       </div>
-
+      
       {
         isModalOpen && (
           <PlayerForm 
@@ -125,6 +133,8 @@ export default function Sub13() {
         !isModalOpen && isPlayerDetailsOpen && (
           <PlayerDetails
             handlePlayerDetailsClose={handlePlayerDetailsClose}
+            submitPlayerSkills={submitPlayerSkill}
+            skills={Skill}
           />
         )
       }

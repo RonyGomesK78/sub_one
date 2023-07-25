@@ -1,20 +1,27 @@
-import { useState } from "react";
 import { Skill } from "./Skill";
 
 import { Skills } from '../utils/mockedSkills';
 import { CustomeButton } from "./CustomButton";
+import { ChangeEvent, useState } from "react";
 
-export default function PlayerDetails(props: { handlePlayerDetailsClose: any }) {
+export default function PlayerDetails(props: { handlePlayerDetailsClose: any, submitPlayerSkills: any, skills: Skills }) {
 
-  const [isEditing, setIsEditing] = useState(false);
+  const { skills, handlePlayerDetailsClose, submitPlayerSkills } = props;
 
-  const { handlePlayerDetailsClose } = props;
+  const [playerSkills, setPlayerSkills] = useState<Skills>(skills)
 
-  const handleEditing = () => {
-    console.log(isEditing);
-    setIsEditing(!isEditing);
+  const handleSetPlayerSkills = (e: ChangeEvent<HTMLInputElement>, previousValue: number = 0) => {
+    const { name, value } = e.target;
+    const currentValue = previousValue > 0 ? previousValue : Number(value);
+        
+    if (currentValue >= 0 && currentValue <= 20) {
+      setPlayerSkills({
+        ...playerSkills,
+        [name]: currentValue === 0 ? '' : currentValue,
+      });
+    }
+  };
 
-  }
   return (
     <>
       <div className="h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-black bg-opacity-50">
@@ -45,51 +52,87 @@ export default function PlayerDetails(props: { handlePlayerDetailsClose: any }) 
               <h4 className="font-semibold text-lg mb-2 border-t pt-2">Técnica</h4>
               <Skill
                 attribute="Cabeceamento"
-                rate={Skills.heading}
+                inputName="heading"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
               <Skill
                 attribute="Cantos"
-                rate={Skills.corner}
+                inputName="corner"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
               <Skill
                 attribute="Cruzamentos"
-                rate={Skills.crossing}
+                inputName="crossing"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
               <Skill
                 attribute="Desarme"
-                rate={Skills.tackling}
+                inputName="tackling"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
               <Skill
                 attribute="Finalização"
-                rate={Skills.finishing}
+                inputName="finishing"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
               <Skill
                 attribute="Finta"
-                rate={Skills.crossing}
+                inputName="dribbling"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
               <Skill
                 attribute="Livres"
-                rate={Skills.corner}
+                inputName="free_kick"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
               <Skill
                 attribute="Marcação"
-                rate={Skills.tackling}
+                inputName="marking"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
               <Skill
                 attribute="Marcação de Penalti"
-                rate={Skills.crossing}
+                inputName="penalty"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
               <Skill
                 attribute="Passe"
-                rate={Skills.tackling}
+                inputName="passing"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
               <Skill
                 attribute="Primeiro toque"
-                rate={Skills.tackling}
+                inputName="first_touch"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
               <Skill
                 attribute="Técnica"
-                rate={Skills.corner}
+                inputName="technique"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
             </div>
 
@@ -97,43 +140,73 @@ export default function PlayerDetails(props: { handlePlayerDetailsClose: any }) 
               <h4 className="font-semibold text-lg mb-2 border-t pt-2">Mental</h4>
               <Skill
                 attribute="Disciplina"
-                rate={Skills.crossing}
+                inputName="discipline"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
               <Skill
                 attribute="Agressividade"
-                rate={Skills.crossing}
+                inputName="aggression"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
               <Skill
                 attribute="Antecipação"
-                rate={Skills.crossing}
+                inputName="anticipation"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
               <Skill
                 attribute="Concentração"
-                rate={Skills.crossing}
+                inputName="concentration"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
               <Skill
                 attribute="Decisão"
-                rate={Skills.crossing}
+                inputName="decision"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
               <Skill
                 attribute="Determinação"
-                rate={Skills.crossing}
+                inputName="determination"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
               <Skill
                 attribute="Liderança"
-                rate={Skills.crossing}
+                inputName="leadership"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
               <Skill
                 attribute="Posicionamento"
-                rate={Skills.crossing}
+                inputName="positioning"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
               <Skill
                 attribute="Trabalho de Equipa"
-                rate={Skills.crossing}
+                inputName="teamwork"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
               <Skill
                 attribute="Visão de Jogo"
-                rate={Skills.crossing}
+                inputName="vision"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
             </div>
           </div>
@@ -143,31 +216,45 @@ export default function PlayerDetails(props: { handlePlayerDetailsClose: any }) 
               <h4 className="font-semibold text-lg mb-2 border-t pt-2">Físico</h4>
               <Skill
                 attribute="Aceleração"
-                rate={Skills.crossing}
+                inputName="acceleration"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
               <Skill
                 attribute="Agilidade"
-                rate={Skills.crossing}
-              />
-              <Skill
-                attribute="Equilibrio"
-                rate={Skills.crossing}
+                inputName="agility"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
               <Skill
                 attribute="Força"
-                rate={Skills.crossing}
+                inputName="strength"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
               <Skill
                 attribute="Impulsão"
-                rate={Skills.crossing}
+                inputName="jumping_reach"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
               <Skill
                 attribute="Resistência"
-                rate={Skills.crossing}
+                inputName="stamina"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
               <Skill
                 attribute="Velocidade"
-                rate={Skills.crossing}
+                inputName="pace"
+                playerSkills={playerSkills}
+                defaultPlayerSkills={skills}
+                setRate={handleSetPlayerSkills}
               />
             </div>
 
@@ -192,10 +279,11 @@ export default function PlayerDetails(props: { handlePlayerDetailsClose: any }) 
               handleOnClick={handlePlayerDetailsClose}
             />
             <CustomeButton
+              type="submit"
               color="bg-red-500"
               secondaryColor='bg-red-700'
               message="Guardar"
-              handleOnClick={handlePlayerDetailsClose}
+              handleOnClick={() => submitPlayerSkills(playerSkills)}
             />
           </div>
           <div className="mb-4 h-10"></div>
