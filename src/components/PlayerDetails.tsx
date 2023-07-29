@@ -258,14 +258,18 @@ export default function PlayerDetails(props: { handlePlayerDetailsClose: any, su
               />
             </div>
 
-            <div className="w-full sm:pl-4 self-end sm:mt-0 mt-12 p-2">
-              <p className="text-xs">Encarregado Educação 1</p>
-              <p className="text-base font-semibold">Perpétua Antónia Alves</p>
-              <p className="text-xs mb-4 shadow-md">+238 9929618</p>
+            <div className="w-full sm:pl-4 sm:mt-0 mt-12">
+              <h4 className="font-semibold text-lg mb-2 border-t pt-2">Encarregados de Educação</h4>
 
-              <p className="text-xs pt-2">Encarregado Educação 2</p>
-              <p className="text-base font-semibold">Albertino Alberto Gomes</p>
-              <p className="text-xs mb-4 shadow-md">+238 9369726</p>
+              <div className="mb-4 border shadow-md">
+                <p className="p-2 text-sm cursor-pointer hover:bg-gray-200">Perpétua Antónia Alves</p>
+                <p className="py-1 px-2 text-xs cursor-pointer hover:bg-gray-200">+238 9929618</p>
+              </div>
+
+              <div className="mb-4 border shadow-md">
+                <p className="p-2 text-sm cursor-pointer hover:bg-gray-200">Albertino Alberto Gomes</p>
+                <p className="py-1 px-2 text-xs cursor-pointer hover:bg-gray-200">+238 9369726</p>
+              </div>
             </div>
           </div>
 
