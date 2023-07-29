@@ -1,5 +1,9 @@
+import { ChangeEvent, useState } from "react";
+import Image from "next/image";
+
 import { Skills } from "@/utils/mockedSkills";
-import { ChangeEvent, useState } from "react"
+
+import returnIcon from "../assets/return.svg";
 
 interface Props {
   attribute: string,
@@ -39,7 +43,7 @@ export function Skill({
   return (
     <>
       <div
-        className={`flex justify-between text-sm rounded-md mb-4 md:p-2 p-3 shadow-md  ${isEditing ? 'bg-blue-300 text-gray-700' : 'bg-gray-200'}`}
+        className={`flex justify-between text-sm rounded-md md:p-2 p-3 shadow-md  ${isEditing ? 'mb-0 bg-blue-300 text-gray-700' : 'mb-4 bg-gray-200'}`}
       >
         <p
           className={`self-center cursor-pointer`}
@@ -50,22 +54,36 @@ export function Skill({
         {
           isEditing
             ?
-            <input
-              name={inputName}
-              autoFocus
-              min={1}
-              max={20}
-              type="number"
-              className="py-1 px-2 ml-2 w-12 text-center focus:outline-none focus:ring-2 focus:ring-blue-500 border rounded-md shadow-md [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-              value={playerSkills[inputName]}
-              onBlur={(e) => handleOnBlur(e)}
-              onChange={(e) => setRate(e)}
-            />
+              <input
+                name={inputName}
+                autoFocus
+                min={1}
+                max={20}
+                type="number"
+                className="py-1 px-2 ml-2 w-12 text-center focus:outline-none focus:ring-2 focus:ring-blue-500 border rounded-md shadow-md [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                value={playerSkills[inputName]}
+                onBlur={(e) => handleOnBlur(e)}
+                onChange={(e) => setRate(e)}
+              />
             :
-            <p className="self-center pr-4">{playerSkills[inputName]}</p>
+              <p className="self-center pr-4">{playerSkills[inputName]}</p>
         }
-
       </div>
+      {
+        isEditing && (
+          <div className="mb-4 flex justify-end">
+            <Image
+              alt="return icon"
+              src={returnIcon}
+              className="justify-end w-7 bg-white rounded-md border shadow-lg"
+              onClick={() => {
+                setRate({ target: { name: inputName, value: null }}, defaultPlayerSkills[inputName]);
+                setIsEditing(false);
+              }}
+            />
+          </div>
+        )
+      }
     </>
   )
 }
