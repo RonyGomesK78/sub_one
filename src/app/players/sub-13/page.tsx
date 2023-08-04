@@ -44,6 +44,17 @@ export default function Sub13() {
     }
   ]);
 
+  const guardiansData = [
+    {
+      name: 'Perpétua Antónia Alves',
+      phoneNumber: '9929618'
+    },
+    {
+      name: 'Albertino Alberto Gomes',
+      phoneNumber: '9369726'
+    }
+  ];
+
   const handleOpenModal = () => {
     setIsModalOpen(true);
   }
@@ -135,6 +146,7 @@ export default function Sub13() {
             handlePlayerDetailsClose={handlePlayerDetailsClose}
             submitPlayerSkills={submitPlayerSkill}
             skills={Skill}
+            guardiansData={guardiansData}
           />
         )
       }

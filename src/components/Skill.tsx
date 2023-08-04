@@ -46,7 +46,7 @@ export function Skill({
         className={`flex justify-between text-sm rounded-md md:p-2 p-3 shadow-md  ${isEditing ? 'mb-0 bg-blue-300 text-gray-700' : 'mb-4 bg-gray-200'}`}
       >
         <p
-          className={`self-center cursor-pointer`}
+          className={`self-center cursor-pointer ${isEditing ? 'bg-white border rounded-sm' : ''}`}
           onClick={handleOnEditing}
         >
           {attribute}

@@ -1,14 +1,22 @@
-import { Skill } from "./Skill";
-
-import { Skills } from '../utils/mockedSkills';
-import { CustomeButton } from "./CustomButton";
 import { ChangeEvent, useState } from "react";
 
-export default function PlayerDetails(props: { handlePlayerDetailsClose: any, submitPlayerSkills: any, skills: Skills }) {
+import { Skill } from "./Skill";
+import { CustomeButton } from "./CustomButton";
+import { Guardians } from "./Guardians";
 
-  const { skills, handlePlayerDetailsClose, submitPlayerSkills } = props;
+import { Guardian } from "@/interfaces/Guardian";
+
+import { Skills } from '../utils/mockedSkills';
+
+
+
+export default function PlayerDetails(props: { handlePlayerDetailsClose: any, submitPlayerSkills: any, skills: Skills, guardiansData: Guardian[] }) {
+
+  const { skills, handlePlayerDetailsClose, submitPlayerSkills, guardiansData } = props;
 
   const [playerSkills, setPlayerSkills] = useState<Skills>(skills)
+
+  const [guardians, setGuardians] = useState<Guardian[]>(guardiansData);
 
   const handleSetPlayerSkills = (e: ChangeEvent<HTMLInputElement>, previousValue: number = 0) => {
     const { name, value } = e.target;
@@ -22,6 +30,20 @@ export default function PlayerDetails(props: { handlePlayerDetailsClose: any, su
     }
   };
 
+  const handleSetGuardianInfo = (e: ChangeEvent<HTMLInputElement>, index: number, resetData: boolean = false ) => {
+    const { name, value } = e.target;
+
+    const updatedGuardians = [...guardians];
+    const inputName = name === 'name' ? 'name' : 'phoneNumber'; // to assert the value that guardiansData accept
+    const currentValue = resetData ? guardiansData[index][inputName] : value;
+   
+    updatedGuardians[index] = {
+      ...updatedGuardians[index],
+      [name]: currentValue
+    }
+
+    setGuardians(updatedGuardians);
+  }
   return (
     <>
       <div className="h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-black bg-opacity-50">
@@ -261,15 +283,16 @@ export default function PlayerDetails(props: { handlePlayerDetailsClose: any, su
             <div className="w-full sm:pl-4 sm:mt-0 mt-12">
               <h4 className="font-semibold text-lg mb-2 border-t pt-2">Encarregados de Educação</h4>
 
-              <div className="mb-4 border shadow-md">
-                <p className="p-2 text-sm cursor-pointer hover:bg-gray-200">Perpétua Antónia Alves</p>
-                <p className="py-1 px-2 text-xs cursor-pointer hover:bg-gray-200">+238 9929618</p>
-              </div>
-
-              <div className="mb-4 border shadow-md">
-                <p className="p-2 text-sm cursor-pointer hover:bg-gray-200">Albertino Alberto Gomes</p>
-                <p className="py-1 px-2 text-xs cursor-pointer hover:bg-gray-200">+238 9369726</p>
-              </div>
+              <Guardians 
+                guardianData={guardians}
+                setValue={handleSetGuardianInfo}
+                index={0}
+              />
+              <Guardians 
+                guardianData={guardians}
+                setValue={handleSetGuardianInfo}
+                index={1}
+              />
             </div>
           </div>
 
