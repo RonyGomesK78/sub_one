@@ -10,7 +10,7 @@ export function EmptyPlayers(props: { handleOpenModal: MouseEventHandler<HTMLBut
         Não tens nenhum jogador adicionado.
       </h2>
       <button
-        className="bg-red-700 text-white p-3 rounded-md hover:bg-red-600"
+        className="bg-red-700 text-white p-3 rounded-md shadow-lg hover:bg-red-600"
         onClick={handleOpenModal}
       >
         Adicionar Jogador
