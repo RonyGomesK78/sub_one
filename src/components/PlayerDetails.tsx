@@ -8,8 +8,6 @@ import { Guardian } from "@/interfaces/Guardian";
 
 import { Skills } from '../utils/mockedSkills';
 
-
-
 export default function PlayerDetails(props: { handlePlayerDetailsClose: any, submitPlayerSkills: any, skills: Skills, guardiansData: Guardian[] }) {
 
   const { skills, handlePlayerDetailsClose, submitPlayerSkills, guardiansData } = props;
@@ -17,6 +15,14 @@ export default function PlayerDetails(props: { handlePlayerDetailsClose: any, su
   const [playerSkills, setPlayerSkills] = useState<Skills>(skills)
 
   const [guardians, setGuardians] = useState<Guardian[]>(guardiansData);
+
+  const [foot, setFoot] = useState<string>('Direito');
+
+  const [position, setPosition] = useState<string>('MC');
+
+  const [isEditingFoot, setIsEditingFoot] = useState<boolean>(false);
+
+  const [isEditingPosition, setIsEditingPosition] = useState<boolean>(false);
 
   const handleSetPlayerSkills = (e: ChangeEvent<HTMLInputElement>, previousValue: number = 0) => {
     const { name, value } = e.target;
@@ -53,11 +59,71 @@ export default function PlayerDetails(props: { handlePlayerDetailsClose: any, su
           <div className="flex justify-between rounded-md p-4 bg-gray-300">
             <div>
               <div>
-                <p className="text-lg font-semibold">MC</p>
+                {
+                  isEditingPosition
+                    ?
+                      <select
+                        autoFocus
+                        value={position}  
+                        className="mb-1 text-lg bg-white border border-gray-300 rounded-md shadow-sm focus:outline-blue-300"
+                        name="position" 
+                        id="position" 
+                        onChange={(e) => {
+                          setPosition(e.target.value);
+                          setIsEditingPosition(false);
+                        }}
+                        onBlur={() => setIsEditingPosition(false)}
+                      >
+                        <option value="GR">GR</option>
+                        <option value="DC">DC</option>
+                        <option value="LE">LE</option>
+                        <option value="LD">LD</option>
+                        <option value="MD">MD</option>
+                        <option value="MC">MC</option>
+                        <option value="MO">MO</option>
+                        <option value="EE">EE</option>
+                        <option value="ED">ED</option>
+                        <option value="PL">PL</option>
+                      </select>
+                    :
+                      <p 
+                        className="text-lg font-semibold cursor-pointer"
+                        onClick={() => setIsEditingPosition(true)}
+                      >
+                        {position}
+                      </p>
+                }
                 <p className="text-xs">Posição</p>
               </div>
+
               <div className="mt-4">
-                <p className="text-lg font-semibold">Direito</p>
+                {
+                  isEditingFoot
+                    ?
+                      <select
+                        autoFocus
+                        value={foot}  
+                        className="mb-1 text-lg bg-white border border-gray-300 rounded-md shadow-sm focus:outline-blue-300"
+                        name="foot" 
+                        id="foot" 
+                        onChange={(e) => {
+                          setFoot(e.target.value);
+                          setIsEditingFoot(false);
+                        }}
+                        onBlur={() => setIsEditingFoot(false)}
+                      >
+                        <option value="Esquerdo">Esquerdo</option>
+                        <option value="Direito">Direito</option>
+                        <option value="Direito e Esquerdo">Direito e Esquerdo</option>
+                      </select>
+                    :
+                      <p
+                        className="text-lg font-semibold cursor-pointer"
+                        onClick={() => setIsEditingFoot(true)}
+                      >
+                        {foot}
+                      </p>
+                }
                 <p className="text-xs">Pé</p>
               </div>
             </div>
