@@ -15,7 +15,7 @@ export function CustomeButton({
 
   return (
     <button
-      className={`xl:p-3 p-2 rounded text-white ${color} hover:${secondaryColor}`}
+      className={`xl:p-3 p-2 rounded shadow-lg text-white ${color} hover:${secondaryColor}`}
       onClick={handleOnClick}
       type={type}
     >
