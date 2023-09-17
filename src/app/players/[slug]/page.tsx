@@ -9,7 +9,7 @@ import PlayerDetails from "@/components/PlayerDetails";
 
 import getAge from "../../../utils/getYear";
 import compareSkill from "@/utils/compareSkill";
-
+import mapTeamSlugName from "@/utils/mapTeamSlugName";
 import { Skill, Skills } from "@/utils/mockedSkills";
 
 interface Player {
@@ -31,8 +31,9 @@ interface PlayerSubmitInfo {
   fatherPhone?: string;
 }
 
-export default function Sub13() {
+export default function Team({ params }: { params: { slug: string } }) {
 
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPlayerDetailsOpen, setIsPlayerDetailOpen] = useState(false);
   const [players, setPlayers] = useState<Player[]>([
@@ -113,7 +114,7 @@ export default function Sub13() {
       <div className="flex justify-between">
         <div className="xl:mx-80 mx-4">
           <h1 className="font-semibold text-xl mt-4">Jogadores</h1>
-          <h2 className="text-gray-600 text-xs mb-8">SUB-13</h2>
+          <h2 className="text-gray-600 text-xs mb-8">{mapTeamSlugName(params.slug)}</h2>
         </div>
         <div className="justify-end xl:mr-80 mr-4 mt-4">
           <button
