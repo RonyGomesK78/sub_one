@@ -86,8 +86,6 @@ export default function Team({ params }: { params: { slug: string } }) {
   }
 
   const submitPlayerSkill = (values: Skills) => {
- 
-    console.log(compareSkill(Skill, values));
     setIsPlayerDetailOpen(false);
   }
 

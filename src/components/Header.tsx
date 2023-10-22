@@ -1,15 +1,14 @@
 "use client";
 import Image from 'next/image';
-import Link from 'next/link';
-import  { useState } from 'react';
+import  { MouseEventHandler, useState } from 'react';
 
 import logo from '../assets/nuno rocha.png';
 import userIcon from '../assets/user-profile.svg';
 import menuIcon from '../assets/menu.svg';
 import xCircleicon from '../assets/x-circle.svg';
 
-export function Header() {
-
+export function Header(props: {toggleUserProfile: MouseEventHandler<HTMLDivElement>}) {
+  const  { toggleUserProfile } = props;
   const [isMenuClicked, setIsMenuClicked] = useState(false);
 
   const handleOnMenuClick = () => {
@@ -70,11 +69,12 @@ export function Header() {
         {/* USER PROFILE   */}
         <div
           className='flex justify-end w-full mr-2'
-        >
-          <Image 
+          >
+          <Image
             src={userIcon}
             alt='user profile icon'
             className='w-6'
+            onClick={toggleUserProfile}
           />
         </div>
       </div>
