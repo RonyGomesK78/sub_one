@@ -8,7 +8,7 @@ import deleteIcon from '../assets/wrong.svg';
 import { Guardian } from '@/interfaces/Guardian';
 
 interface Props {
-  guardianData: Guardian[],
+  guardianData?: Guardian,
   setValue: any,
   index: number
 }
@@ -48,7 +48,7 @@ export function Guardians(props: Props) {
                   type="text"
                   name='name'
                   placeholder="Digite o nome do encarregado."
-                  value={guardianData[index].name}
+                  value={guardianData?.name}
                   onChange={(e) => setValue(e, index)}
                 />
                 <div className="mt-2 self-end flex gap-2">
@@ -74,7 +74,7 @@ export function Guardians(props: Props) {
                   }
                 }}
               >
-                {guardianData[index]?.name || 'Adicione um encarregado...'}
+                {guardianData?.name || 'Adicione um encarregado...'}
               </p>
           }
         </div>
@@ -89,7 +89,7 @@ export function Guardians(props: Props) {
                   type="number"
                   inputMode="numeric"
                   name="phoneNumber"
-                  value={guardianData[index].phoneNumber}
+                  value={guardianData?.phoneNumber}
                   onChange={  (e) => setValue(e, index)}
                   placeholder="Digite o telefone do encarregado."
                 />
@@ -116,7 +116,7 @@ export function Guardians(props: Props) {
                   }
                 }}
               >
-                {`+238 ${guardianData[index].phoneNumber}`}
+                {`+238 ${guardianData?.phoneNumber}`}
               </p>
           }
         </div>

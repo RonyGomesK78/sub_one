@@ -5,6 +5,7 @@ import {
   Bai_Jamjuree as BaiJamjuree,
 } from 'next/font/google';
 
+import StoreProvider from './StoreProvider';
 import { Header } from '@/components/Header';
 
 const roboto = Roboto({ subsets: ['latin'], variable: '--font-roboto' });
@@ -28,9 +29,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${roboto.variable} ${baiJamjuree.variable} font-sans`}>
-        <Header />
-
-        {children}
+        <StoreProvider>
+          <Header />
+          {children}
+        </StoreProvider>
       </body>
     </html>
   )

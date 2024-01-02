@@ -8,17 +8,28 @@ import { Guardian } from "@/interfaces/Guardian";
 
 import { Skills } from '../utils/mockedSkills';
 
-export default function PlayerDetails(props: { handlePlayerDetailsClose: any, submitPlayerSkills: any, skills: Skills, guardiansData: Guardian[] }) {
+interface Player {
+  id?: string;
+  name: string;
+  age: string;
+  genre: string;
+  average: string;
+  position?: string;
+  guardians?: Guardian[];
+}
 
-  const { skills, handlePlayerDetailsClose, submitPlayerSkills, guardiansData } = props;
+export default function PlayerDetails(props: { handlePlayerDetailsClose: any, submitPlayerSkills: any, skills: Skills, player: Player }) {
+
+  
+  const { skills, handlePlayerDetailsClose, submitPlayerSkills, player } = props;
 
   const [playerSkills, setPlayerSkills] = useState<Skills>(skills)
 
-  const [guardians, setGuardians] = useState<Guardian[]>(guardiansData);
+  // const [guardians, setGuardians] = useState<Guardian[]>(guardiansData);
 
   const [foot, setFoot] = useState<string>('Direito');
 
-  const [position, setPosition] = useState<string>('MC');
+  const [position, setPosition] = useState<string|undefined>(player.position);
 
   const [isEditingFoot, setIsEditingFoot] = useState<boolean>(false);
 
@@ -39,22 +50,22 @@ export default function PlayerDetails(props: { handlePlayerDetailsClose: any, su
   const handleSetGuardianInfo = (e: ChangeEvent<HTMLInputElement>, index: number, resetData: boolean = false ) => {
     const { name, value } = e.target;
 
-    const updatedGuardians = [...guardians];
+    // const updatedGuardians = [...guardians];
     const inputName = name === 'name' ? 'name' : 'phoneNumber'; // to assert the value that guardiansData accept
-    const currentValue = resetData ? guardiansData[index][inputName] : value;
+    // const currentValue = resetData ? guardiansData[index][inputName] : value;
    
-    updatedGuardians[index] = {
-      ...updatedGuardians[index],
-      [name]: currentValue
-    }
+    // updatedGuardians[index] = {
+    //   ...updatedGuardians[index],
+    //   [name]: currentValue
+    // }
 
-    setGuardians(updatedGuardians);
+    // setGuardians(updatedGuardians);
   }
   return (
     <>
       <div className="h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-black bg-opacity-50">
         <div className="bg-white rounded-lg shadow-lg md:w-3/4 lg:w-3/5 xl:w-2/5 w-full px-4 overflow-scroll h-full">
-          <h3 className="text-center font-bold text-lg p-4 m-2">Romilton Alves Gomes</h3>
+          <h3 className="text-center font-bold text-lg p-4 m-2">{player.name}</h3>
 
           <div className="flex justify-between rounded-md p-4 bg-gray-300">
             <div>
@@ -130,7 +141,7 @@ export default function PlayerDetails(props: { handlePlayerDetailsClose: any, su
 
             <div className="text-end">
               <p className="text-xs">anos</p>
-              <p className="text-lg font-semibold">30</p>
+              <p className="text-lg font-semibold">{player.age}</p>
               <p className="text-xs">28-09-1992</p>
             </div>
           </div>
@@ -350,12 +361,12 @@ export default function PlayerDetails(props: { handlePlayerDetailsClose: any, su
               <h4 className="font-semibold text-lg mb-2 border-t pt-2">Encarregados de Educação</h4>
 
               <Guardians 
-                guardianData={guardians}
+                guardianData={player.guardians && player?.guardians[0]}
                 setValue={handleSetGuardianInfo}
                 index={0}
               />
               <Guardians 
-                guardianData={guardians}
+                guardianData={player.guardians && player?.guardians[1]}
                 setValue={handleSetGuardianInfo}
                 index={1}
               />
