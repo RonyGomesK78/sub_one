@@ -1,4 +1,5 @@
 interface Players {
+  id: string;
   name: string;
   age: string;
   genre: string;
@@ -10,14 +11,14 @@ export default function PlayersTable(props: { players: Players[]; handlePlayerDe
   const { players, handlePlayerDetailOpen } = props;
 
   const tableBody = () => {
-    return players.map((player, index) => {
+    return players.map((player) => {
       const averageColor = Number(player?.average) > 9 ? "text-green-500" : "text-red-500";
 
       return (
         <tr 
-          key={index} 
+          key={player.id} 
           className="bg-gray-100 border-white border-y-8 cursor-pointer hover:bg-gray-200"
-          onClick={handlePlayerDetailOpen}
+          onClick={() => handlePlayerDetailOpen(player)}
         >
           <td className="text-left whitespace-nowrap p-8">
             {player.genre}

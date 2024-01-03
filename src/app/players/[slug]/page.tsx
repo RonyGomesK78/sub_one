@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { EmptyPlayers } from "@/components/EmptyPlayers";
 import PlayerForm from "@/components/PlayerForm";
@@ -12,14 +12,30 @@ import compareSkill from "@/utils/compareSkill";
 import mapTeamSlugName from "@/utils/mapTeamSlugName";
 import { Skill, Skills } from "@/utils/mockedSkills";
 
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
+
+import { fetchPlayers, selectplayers } from "@/lib/redux/features/playersSlice";
+import { RootState } from "@/lib/redux/store";
+import { Guardian } from "@/interfaces/Guardian";
+
 interface Player {
+  id: string;
   name: string;
   age: string;
   genre: string;
   average: string;
-  position?: string
+  position?: string;
+  guardians?: Guardian[];
 }
 
+interface NewPlayer {
+  name: string;
+  age: string;
+  genre: string;
+  average: string;
+  position?: string;
+  guardians?: Guardian[];
+}
 interface PlayerSubmitInfo {
   name: string;
   birthday: string;
@@ -32,29 +48,14 @@ interface PlayerSubmitInfo {
 }
 
 export default function Team({ params }: { params: { slug: string } }) {
-
   
+  const dispatch = useAppDispatch();
+  const players = useAppSelector((state: RootState) => selectplayers(state));
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPlayerDetailsOpen, setIsPlayerDetailOpen] = useState(false);
-  const [players, setPlayers] = useState<Player[]>([
-    {
-      age: '18',
-      name: 'Romilton Gomes',
-      genre: 'M',
-      average: '5'
-    }
-  ]);
-
-  const guardiansData = [
-    {
-      name: 'Perpétua Antónia Alves',
-      phoneNumber: '9929618'
-    },
-    {
-      name: 'Albertino Alberto Gomes',
-      phoneNumber: '9369726'
-    }
-  ];
+  const [newPlayer, setNewPlayer] = useState<NewPlayer>();
+  const [selectedPlayer, setSelectedPlayer] = useState<Player|null>(null);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -62,23 +63,24 @@ export default function Team({ params }: { params: { slug: string } }) {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setSelectedPlayer(null);
   }
 
-  
   const addPlayer = (player: PlayerSubmitInfo) => {
     setIsModalOpen(false);
-    const newPlayer: Player = {
+    const newPlayer: NewPlayer = {
       age: getAge(new Date(player.birthday)).toString(),
       average: '-',
       genre: player.genre,
       name: player.name,
       position: '-',
     }
-    setPlayers([...players, newPlayer]);
+    setNewPlayer(newPlayer);
   }
 
-  const handlePlayerDetailsOpen = () => {
+  const handlePlayerDetailsOpen = (player: Player) => {
     setIsPlayerDetailOpen(true);
+    setSelectedPlayer(player);
   }
 
   const handlePlayerDetailsClose = () => {
@@ -87,11 +89,15 @@ export default function Team({ params }: { params: { slug: string } }) {
 
   const submitPlayerSkill = (values: Skills) => {
  
-    console.log(compareSkill(Skill, values));
     setIsPlayerDetailOpen(false);
   }
 
-  if (players.length === 0) {
+  useEffect(() => {
+    // Dispatch the async action to fetch todos when the component mounts
+    dispatch(fetchPlayers());
+  }, [dispatch]);
+
+  if (players.data.length === 0) {
     return (
       <>
         <EmptyPlayers
@@ -127,7 +133,7 @@ export default function Team({ params }: { params: { slug: string } }) {
       </div>
       <div className="overflow-x-auto shadow-inner xl:mx-80 m-4">
         <PlayersTable 
-          players={players}
+          players={players.data as unknown as Player []}
           handlePlayerDetailOpen={handlePlayerDetailsOpen}
         />
       </div>
@@ -142,12 +148,12 @@ export default function Team({ params }: { params: { slug: string } }) {
       }
 
       {
-        !isModalOpen && isPlayerDetailsOpen && (
+        !isModalOpen && isPlayerDetailsOpen && selectedPlayer && (
           <PlayerDetails
             handlePlayerDetailsClose={handlePlayerDetailsClose}
             submitPlayerSkills={submitPlayerSkill}
             skills={Skill}
-            guardiansData={guardiansData}
+            player={selectedPlayer}
           />
         )
       }
