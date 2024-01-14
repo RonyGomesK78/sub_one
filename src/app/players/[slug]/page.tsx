@@ -14,9 +14,11 @@ import { Skill, Skills } from "@/utils/mockedSkills";
 
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 
-import { fetchPlayers, selectplayers } from "@/lib/redux/features/playersSlice";
+import { fetchPlayers, selectPlayers } from "@/lib/redux/features/playersSlice";
 import { RootState } from "@/lib/redux/store";
+
 import { Guardian } from "@/interfaces/Guardian";
+import Loading from "@/components/Loading";
 
 interface Player {
   id: string;
@@ -50,8 +52,8 @@ interface PlayerSubmitInfo {
 export default function Team({ params }: { params: { slug: string } }) {
   
   const dispatch = useAppDispatch();
-  const players = useAppSelector((state: RootState) => selectplayers(state));
-
+  const players = useAppSelector((state: RootState) => selectPlayers(state));
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPlayerDetailsOpen, setIsPlayerDetailOpen] = useState(false);
   const [newPlayer, setNewPlayer] = useState<NewPlayer>();
@@ -97,7 +99,10 @@ export default function Team({ params }: { params: { slug: string } }) {
     dispatch(fetchPlayers());
   }, [dispatch]);
 
-  if (players.data.length === 0) {
+  if (players.status === 'idle' || players.status === 'loading') {
+    return <Loading />
+  }
+  else if (players.status === 'succeeded' && players.data.length === 0) {
     return (
       <>
         <EmptyPlayers

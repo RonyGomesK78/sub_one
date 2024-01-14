@@ -1,9 +1,10 @@
 interface Players {
   id: string;
   name: string;
-  age: string;
+  nickname?: string;
+  birthdate?: string;
   genre: string;
-  average?: string;
+  address?: string;
   position?: string
 }
 
@@ -12,8 +13,6 @@ export default function PlayersTable(props: { players: Players[]; handlePlayerDe
 
   const tableBody = () => {
     return players.map((player) => {
-      const averageColor = Number(player?.average) > 9 ? "text-green-500" : "text-red-500";
-
       return (
         <tr 
           key={player.id} 
@@ -23,17 +22,20 @@ export default function PlayersTable(props: { players: Players[]; handlePlayerDe
           <td className="text-left whitespace-nowrap p-8">
             {player.genre}
           </td>
-          <td className="text-center whitespace-nowrap px-3">
+          <td className="text-left whitespace-nowrap px-4">
             {player.name}
           </td>
-          <td className="text-center whitespace-nowrap px-3">
-            {player.age}
+          <td className="text-left whitespace-nowrap px-4">
+            {player.nickname}
           </td>
-          <td className="text-center whitespace-nowrap px-3">
+          <td className="text-left whitespace-nowrap px-4">
             {player?.position}
           </td>
-          <td className={`text-right whitespace-nowrap px-4 pr-8 ${averageColor}`}>
-            {player.average}
+          <td className={"text-left whitespace-nowrap px-4"}>
+            {player.birthdate}
+          </td>
+          <td className={"text-right whitespace-nowrap px-4 pr-8"}>
+            {player.address}
           </td>
         </tr>
       )
@@ -45,10 +47,11 @@ export default function PlayersTable(props: { players: Players[]; handlePlayerDe
       <thead>
         <tr className="text-gray-400 ">
           <th className="text-left pl-8 pt-3 align-middle">SEXO</th>
-          <th className="whitespace-nowrap pt-3 px-4">NOME</th>
-          <th className="whitespace-nowrap pt-3 px-4">IDADE</th>
-          <th className="whitespace-nowrap pt-3 px-4">POSIÇÃO</th>
-          <th className="text-right whitespace-nowrap pt-3 px-4 pr-8">CLASSIFICAÇÃO</th>
+          <th className="text-left whitespace-nowrap pt-3 px-4">NOME</th>
+          <th className="text-left whitespace-nowrap pt-3 px-4">ALCUNHA</th>
+          <th className="text-left whitespace-nowrap pt-3 px-4">POSIÇÃO</th>
+          <th className="text-left whitespace-nowrap pt-3 px-4">DATA DE NASCIMENTO</th>
+          <th className="text-right whitespace-nowrap pt-3 px-4 pr-8">ENDEREÇO</th>
         </tr>
       </thead>
 

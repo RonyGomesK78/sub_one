@@ -45,5 +45,5 @@ const playersSlice = createSlice({
   },
 });
 
-export const selectplayers = (state: RootState) => state.players;
+export const selectPlayers = (state: RootState) => state.players;
 export default playersSlice.reducer;
