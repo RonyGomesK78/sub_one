@@ -1,14 +1,11 @@
-export function Loading() {
+import React from 'react';
+
+const Loading: React.FC = () => {
   return (
-    <>
-      <div className="flex flex-row items-center justify-center h-screen">
-        <svg className="animate-pulse h-4 rounded-full w-4 mr-3 bg-red-400" viewBox="0 0 24 24"></svg>
-        <svg className="animate-pulse h-4 rounded-full w-4 mr-3 bg-yellow-400" viewBox="0 0 24 24"></svg>
-        <svg className="animate-pulse h-4 rounded-full w-4 mr-3 bg-green-400" viewBox="0 0 24 24"></svg>
-        </div>
-        <div className="flex flex-row justify-center">
-        Guardando...
-      </div>
-    </>
-  )
-}
+    <div className="flex justify-center mt-8">
+      <div className="animate-spin rounded-full border-t-4 border-red-600 h-16 w-16"></div>
+    </div>
+  );
+};
+
+export default Loading;
