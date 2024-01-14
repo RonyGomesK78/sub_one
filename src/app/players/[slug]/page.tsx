@@ -27,7 +27,7 @@ interface Player {
   genre: string;
   average: string;
   position?: string;
-  guardians?: Guardian[];
+  guardians: Guardian[];
 }
 
 interface NewPlayer {

@@ -1,3 +1,5 @@
+import { Guardian } from "@/interfaces/Guardian";
+
 interface Players {
   id: string;
   name: string;
@@ -5,13 +7,27 @@ interface Players {
   birthdate?: string;
   genre: string;
   address?: string;
-  position?: string
+  position?: string,
+  guardians: Guardian[];
 }
 
 export default function PlayersTable(props: { players: Players[]; handlePlayerDetailOpen: any }) {
   const { players, handlePlayerDetailOpen } = props;
 
+  const renderGuardians = (guardians: Guardian[]) => {
+    if (guardians.length === 2) {
+      return (
+        <li className="list-none">
+          <ul>{guardians[0].name}</ul>
+          <ul>{guardians[1].name}</ul>
+        </li>
+      )
+    }
+    return `${guardians[0].name}`;
+  }
+
   const tableBody = () => {
+    
     return players.map((player) => {
       return (
         <tr 
@@ -34,8 +50,11 @@ export default function PlayersTable(props: { players: Players[]; handlePlayerDe
           <td className={"text-left whitespace-nowrap px-4"}>
             {player.birthdate}
           </td>
-          <td className={"text-right whitespace-nowrap px-4 pr-8"}>
+          <td className={"text-left whitespace-nowrap px-4"}>
             {player.address}
+          </td>
+          <td className={"text-right whitespace-nowrap px-4 pr-8"}>
+            {renderGuardians(player.guardians)}
           </td>
         </tr>
       )
@@ -51,7 +70,8 @@ export default function PlayersTable(props: { players: Players[]; handlePlayerDe
           <th className="text-left whitespace-nowrap pt-3 px-4">ALCUNHA</th>
           <th className="text-left whitespace-nowrap pt-3 px-4">POSIÇÃO</th>
           <th className="text-left whitespace-nowrap pt-3 px-4">DATA DE NASCIMENTO</th>
-          <th className="text-right whitespace-nowrap pt-3 px-4 pr-8">ENDEREÇO</th>
+          <th className="text-left whitespace-nowrap pt-3 px-4">ENDEREÇO</th>
+          <th className="text-right whitespace-nowrap pt-3 px-4 pr-8">ENCARREGADOS DE EDUCAÇÃO</th>
         </tr>
       </thead>
 

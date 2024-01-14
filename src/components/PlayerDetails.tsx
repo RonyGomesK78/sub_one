@@ -20,7 +20,7 @@ interface Player {
 
 export default function PlayerDetails(props: { handlePlayerDetailsClose: any, submitPlayerSkills: any, skills: Skills, player: Player }) {
 
-  
+
   const { skills, handlePlayerDetailsClose, submitPlayerSkills, player } = props;
 
   const [playerSkills, setPlayerSkills] = useState<Skills>(skills)
