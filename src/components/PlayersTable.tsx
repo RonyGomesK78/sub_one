@@ -1,20 +1,13 @@
 import { Guardian } from "@/interfaces/Guardian";
+import { PlayersResponse } from "@/interfaces/PlayerRequest";
 
-interface Players {
-  id: string;
-  name: string;
-  nickname?: string;
-  birthdate?: string;
-  genre: string;
-  address?: string;
-  position?: string,
-  guardians: Guardian[];
-}
-
-export default function PlayersTable(props: { players: Players[]; handlePlayerDetailOpen: any }) {
+export default function PlayersTable(props: { players: PlayersResponse[]; handlePlayerDetailOpen: any }) {
   const { players, handlePlayerDetailOpen } = props;
 
   const renderGuardians = (guardians: Guardian[]) => {
+    if (guardians.length === 0) {
+      return '-'
+    }
     if (guardians.length === 2) {
       return (
         <li className="list-none">
@@ -42,19 +35,19 @@ export default function PlayersTable(props: { players: Players[]; handlePlayerDe
             {player.name}
           </td>
           <td className="text-left whitespace-nowrap px-4">
-            {player.nickname}
+            {player.nickname || '-'}
           </td>
           <td className="text-left whitespace-nowrap px-4">
-            {player?.position}
+            {player?.positions?.length  ? player?.positions[0].name : '-'}
           </td>
           <td className={"text-left whitespace-nowrap px-4"}>
             {player.birthdate}
           </td>
           <td className={"text-left whitespace-nowrap px-4"}>
-            {player.address}
+            {player.address || '-'}
           </td>
           <td className={"text-right whitespace-nowrap px-4 pr-8"}>
-            {renderGuardians(player.guardians)}
+            {player.guardians ? renderGuardians(player.guardians) : '-'}
           </td>
         </tr>
       )
