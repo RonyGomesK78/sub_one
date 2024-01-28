@@ -5,7 +5,7 @@ interface Props {
   secondaryColor: string,
   type?: "submit" | "button" | "reset"
 }
-export function CustomeButton({
+export function CustomButton({
   color,
   secondaryColor,
   message,
@@ -15,7 +15,7 @@ export function CustomeButton({
 
   return (
     <button
-      className={`xl:p-3 p-2 rounded shadow-lg text-white ${color} hover:${secondaryColor}`}
+      className={`xl:p-3 p-4 rounded shadow-lg text-white ${color} hover:${secondaryColor}`}
       onClick={handleOnClick}
       type={type}
     >

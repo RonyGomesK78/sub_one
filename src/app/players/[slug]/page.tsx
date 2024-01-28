@@ -2,23 +2,25 @@
 
 import { useEffect, useState } from "react";
 
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
+import { RootState } from "@/lib/redux/store";
+
+import { fetchPlayers, footballPlayers, addPlayer } from "@/lib/redux/features/playersSlice";
+import { fetchFootballPositions, footballPositions } from "@/lib/redux/features/footballPositionsSlice";
+import { fetchFootballCategories, footballCategories } from "@/lib/redux/features/footballCategoriesSlice";
+
 import { EmptyPlayers } from "@/components/EmptyPlayers";
 import PlayerForm from "@/components/PlayerForm";
 import PlayersTable from "@/components/PlayersTable";
 import PlayerDetails from "@/components/PlayerDetails";
-
-import getAge from "../../../utils/getYear";
-import compareSkill from "@/utils/compareSkill";
-import mapTeamSlugName from "@/utils/mapTeamSlugName";
-import { Skill, Skills } from "@/utils/mockedSkills";
-
-import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
-
-import { fetchPlayers, selectPlayers } from "@/lib/redux/features/playersSlice";
-import { RootState } from "@/lib/redux/store";
+import Loading from "@/components/Loading";
+import Toast from '@/components/Toast';
 
 import { Guardian } from "@/interfaces/Guardian";
-import Loading from "@/components/Loading";
+import { PlayerRequest, PlayersResponse } from "@/interfaces/PlayerRequest";
+
+import mapTeamSlugName from "@/utils/mapTeamSlugName";
+import { Skill, Skills } from "@/utils/mockedSkills";
 
 interface Player {
   id: string;
@@ -30,76 +32,78 @@ interface Player {
   guardians: Guardian[];
 }
 
-interface NewPlayer {
-  name: string;
-  age: string;
-  genre: string;
-  average: string;
-  position?: string;
-  guardians?: Guardian[];
-}
-interface PlayerSubmitInfo {
-  name: string;
-  birthday: string;
-  genre: string;
-  motherName?: string;
-  fatherName?: string;
-  playerPhone?: string;
-  motherPhone?: string;
-  fatherPhone?: string;
-}
-
 export default function Team({ params }: { params: { slug: string } }) {
   
   const dispatch = useAppDispatch();
-  const players = useAppSelector((state: RootState) => selectPlayers(state));
+
+  const [message, setMessage] = useState('');
+  const [toastColor, setToastColor] = useState('');
+  const [showToast, setShowToast] = useState(false);
+
+  const players = useAppSelector((state: RootState) => footballPlayers(state));
+  const positions = useAppSelector((state: RootState) => footballPositions(state));
+  const categories = useAppSelector((state: RootState) => footballCategories(state));
   
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPlayerDetailsOpen, setIsPlayerDetailOpen] = useState(false);
-  const [newPlayer, setNewPlayer] = useState<NewPlayer>();
   const [selectedPlayer, setSelectedPlayer] = useState<Player|null>(null);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
-  }
+  };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedPlayer(null);
-  }
+  };
 
-  const addPlayer = (player: PlayerSubmitInfo) => {
+  const submitPlayer = (player: PlayerRequest) => {
     setIsModalOpen(false);
-    const newPlayer: NewPlayer = {
-      age: getAge(new Date(player.birthday)).toString(),
-      average: '-',
-      genre: player.genre,
-      name: player.name,
-      position: '-',
-    }
-    setNewPlayer(newPlayer);
-  }
+    dispatch(addPlayer(player));
+  };
 
   const handlePlayerDetailsOpen = (player: Player) => {
     setIsPlayerDetailOpen(true);
     setSelectedPlayer(player);
-  }
+  };
 
   const handlePlayerDetailsClose = () => {
     setIsPlayerDetailOpen(false);
-  }
+  };
 
   const submitPlayerSkill = (values: Skills) => {
- 
     setIsPlayerDetailOpen(false);
-  }
+  };
 
   useEffect(() => {
-    // Dispatch the async action to fetch todos when the component mounts
     dispatch(fetchPlayers());
+    dispatch(fetchFootballPositions());
+    dispatch(fetchFootballCategories());
   }, [dispatch]);
 
-  if (players.status === 'idle' || players.status === 'loading') {
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setShowToast(false);
+    }, 5000);
+
+    return () => clearTimeout(timeout);
+  }, [showToast, setShowToast]);
+
+  useEffect(() => {
+    if (players.createdStatus === 'succeeded') {
+      setMessage('Guardado com sucesso.');
+      setToastColor('bg-green-500');
+      setShowToast(true);
+    }
+
+    if (players.createdStatus === 'failed') {
+      setMessage('Ocorreu um erro, tente novamente mais tarde.');
+      setToastColor('bg-red-500');
+      setShowToast(true);
+    }
+  }, [players.createdStatus]);
+
+  if (players.status === 'idle' || players.status === 'loading' || positions.status === 'loading') {
     return <Loading />
   }
   else if (players.status === 'succeeded' && players.data.length === 0) {
@@ -113,7 +117,9 @@ export default function Team({ params }: { params: { slug: string } }) {
           isModalOpen &&
             <PlayerForm
               handleCloseModal={handleCloseModal}
-              addPlayer={addPlayer}
+              addPlayer={submitPlayer}
+              positions={positions.data}
+              categories={categories.data}
             />
         }
       </>
@@ -138,7 +144,7 @@ export default function Team({ params }: { params: { slug: string } }) {
       </div>
       <div className="overflow-x-auto shadow-inner xl:mx-80 m-4">
         <PlayersTable 
-          players={players.data as unknown as Player []}
+          players={players.data as unknown as PlayersResponse []}
           handlePlayerDetailOpen={handlePlayerDetailsOpen}
         />
       </div>
@@ -147,7 +153,9 @@ export default function Team({ params }: { params: { slug: string } }) {
         isModalOpen && (
           <PlayerForm 
             handleCloseModal={handleCloseModal}
-            addPlayer={addPlayer}
+            addPlayer={submitPlayer}
+            positions={positions.data}
+            categories={categories.data}
           />
         )
       }
@@ -162,6 +170,12 @@ export default function Team({ params }: { params: { slug: string } }) {
           />
         )
       }
+
+      <Toast 
+        message={message}
+        showToast={showToast}
+        color={toastColor}
+      />
     </>
   )
 }

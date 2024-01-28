@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from "react";
 
 import { Skill } from "./Skill";
-import { CustomeButton } from "./CustomButton";
+import { CustomButton } from "./CustomButton";
 import { Guardians } from "./Guardians";
 
 import { Guardian } from "@/interfaces/Guardian";
@@ -376,13 +376,13 @@ export default function PlayerDetails(props: { handlePlayerDetailsClose: any, su
           <div
             className="flex justify-end gap-2 border-t-2 mt-10 pt-8 pb-12 md:pb-0"
           >
-            <CustomeButton
+            <CustomButton
               color="bg-gray-500"
               secondaryColor='bg-gray-700'
               message="Cancelar"
               handleOnClick={handlePlayerDetailsClose}
             />
-            <CustomeButton
+            <CustomButton
               type="submit"
               color="bg-red-500"
               secondaryColor='bg-red-700'

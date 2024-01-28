@@ -7,13 +7,13 @@ export function EmptyPlayers(props: { handleOpenModal: MouseEventHandler<HTMLBut
       <h2
         className="text-xl text-gray-400 opacity-80 font-bold px-4 text-center"
       >
-        Não tens nenhum jogador adicionado.
+        Não tens nenhum(a) jogador(a) adicionado.
       </h2>
       <button
         className="bg-red-700 text-white p-3 rounded-md shadow-lg hover:bg-red-600"
         onClick={handleOpenModal}
       >
-        Adicionar Jogador
+        Adicionar Jogador(a)
       </button>
     </div>
   )
