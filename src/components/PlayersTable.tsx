@@ -1,7 +1,7 @@
 import { Guardian } from "@/interfaces/Guardian";
-import { PlayersResponse } from "@/interfaces/PlayerRequest";
+import { PlayerResponse } from "@/interfaces/PlayerRequest";
 
-export default function PlayersTable(props: { players: PlayersResponse[]; handlePlayerDetailOpen: any }) {
+export default function PlayersTable(props: { players: PlayerResponse[]; handlePlayerDetailOpen: any }) {
   const { players, handlePlayerDetailOpen } = props;
 
   const renderGuardians = (guardians: Guardian[]) => {
@@ -22,10 +22,11 @@ export default function PlayersTable(props: { players: PlayersResponse[]; handle
   const tableBody = () => {
     
     return players.map((player) => {
+      // I know I can remove the return below
       return (
         <tr 
           key={player.id} 
-          className="bg-gray-100 border-white border-y-8 cursor-pointer hover:bg-gray-200"
+          className="bg-gray-100 border-white border-y-8 cursor-pointer hover:bg-gray-300"
           onClick={() => handlePlayerDetailOpen(player)}
         >
           <td className="text-left whitespace-nowrap p-8">

@@ -9,18 +9,17 @@ import { fetchPlayers, footballPlayers, addPlayer } from "@/lib/redux/features/p
 import { fetchFootballPositions, footballPositions } from "@/lib/redux/features/footballPositionsSlice";
 import { fetchFootballCategories, footballCategories } from "@/lib/redux/features/footballCategoriesSlice";
 
-import { EmptyPlayers } from "@/components/EmptyPlayers";
 import PlayerForm from "@/components/PlayerForm";
 import PlayersTable from "@/components/PlayersTable";
 import PlayerDetails from "@/components/PlayerDetails";
+import { EmptyPlayers } from "@/components/EmptyPlayers";
 import Loading from "@/components/Loading";
 import Toast from '@/components/Toast';
 
 import { Guardian } from "@/interfaces/Guardian";
-import { PlayerRequest, PlayersResponse } from "@/interfaces/PlayerRequest";
+import { PlayerRequest, PlayerResponse } from "@/interfaces/PlayerRequest";
 
 import mapTeamSlugName from "@/utils/mapTeamSlugName";
-import { Skill, Skills } from "@/utils/mockedSkills";
 
 interface Player {
   id: string;
@@ -46,7 +45,7 @@ export default function Team({ params }: { params: { slug: string } }) {
   
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPlayerDetailsOpen, setIsPlayerDetailOpen] = useState(false);
-  const [selectedPlayer, setSelectedPlayer] = useState<Player|null>(null);
+  const [selectedPlayer, setSelectedPlayer] = useState<PlayerResponse|null>(null);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -62,17 +61,9 @@ export default function Team({ params }: { params: { slug: string } }) {
     dispatch(addPlayer(player));
   };
 
-  const handlePlayerDetailsOpen = (player: Player) => {
+  const handlePlayerDetailsOpen = (player: PlayerResponse) => {
     setIsPlayerDetailOpen(true);
     setSelectedPlayer(player);
-  };
-
-  const handlePlayerDetailsClose = () => {
-    setIsPlayerDetailOpen(false);
-  };
-
-  const submitPlayerSkill = (values: Skills) => {
-    setIsPlayerDetailOpen(false);
   };
 
   useEffect(() => {
@@ -144,7 +135,7 @@ export default function Team({ params }: { params: { slug: string } }) {
       </div>
       <div className="overflow-x-auto shadow-inner xl:mx-80 m-4">
         <PlayersTable 
-          players={players.data as unknown as PlayersResponse []}
+          players={players.data as unknown as PlayerResponse []}
           handlePlayerDetailOpen={handlePlayerDetailsOpen}
         />
       </div>
@@ -163,10 +154,12 @@ export default function Team({ params }: { params: { slug: string } }) {
       {
         !isModalOpen && isPlayerDetailsOpen && selectedPlayer && (
           <PlayerDetails
-            handlePlayerDetailsClose={handlePlayerDetailsClose}
-            submitPlayerSkills={submitPlayerSkill}
-            skills={Skill}
-            player={selectedPlayer}
+            name={selectedPlayer.name}
+            birthdate={selectedPlayer.birthdate}
+            categories={selectedPlayer.categories}
+            positions={selectedPlayer.positions}
+            guardians={selectedPlayer.guardians}
+            handleCloseModal={handleCloseModal}
           />
         )
       }
