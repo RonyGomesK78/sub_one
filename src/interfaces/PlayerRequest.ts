@@ -15,7 +15,7 @@ export interface PlayerRequest {
   guardians: GuardianRequest[],
 }
 
-export interface PlayersResponse {
+export interface PlayerResponse {
   id: string;
   name: string;
   nickname?: string;
@@ -26,6 +26,6 @@ export interface PlayersResponse {
   phoneNumber?: string;
   createdAt: string;
   positions?: FootballPosition[];
-  categories?: FootballCategory[];
+  categories: FootballCategory[];
   guardians?: Guardian[];
 }

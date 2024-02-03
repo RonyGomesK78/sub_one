@@ -3,10 +3,10 @@ import axiosInstance from '@/lib/axios/api';
 
 import { RootState } from '../store';
 
-import { PlayerRequest, PlayersResponse } from '@/interfaces/PlayerRequest';
+import { PlayerRequest, PlayerResponse } from '@/interfaces/PlayerRequest';
 
 interface PlayerState {
-  data: PlayersResponse[];
+  data: PlayerResponse[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   createdStatus: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
