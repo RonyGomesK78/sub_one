@@ -47,7 +47,7 @@ export function Header() {
         <div className='hidden md:flex justify-evenly gap-6 text-white text-sm font-bold whitespace-nowrap ml-8'>
 
           <div className='h-full flex items-center border-b border-red-700 hover:border-white'>
-            <a className='' href="/players/women">SÉNIOR FEMININO</a>
+            <a className='' href="/players/senior-feminino">SÉNIOR FEMININO</a>
           </div>
 
           <div className='h-full flex items-center border-b border-red-700 hover:border-white'>
@@ -86,7 +86,7 @@ export function Header() {
           <div className='absolute inset-999999 z-10 w-full h-full bg-gray-100'>
             <ul className='h-full'>
               <li>
-                <a className='border-b inline-block w-full py-3 px-4' href="/players/women">SÉNIOR FEMININO</a>
+                <a className='border-b inline-block w-full py-3 px-4' href="/players/senior-feminino">SÉNIOR FEMININO</a>
               </li>
               <li>
                 <a className='border-b inline-block w-full py-3 px-4' href="/players/sub-15">SUB-15</a>

@@ -67,10 +67,10 @@ export default function Team({ params }: { params: { slug: string } }) {
   };
 
   useEffect(() => {
-    dispatch(fetchPlayers());
+    dispatch(fetchPlayers(params.slug));
     dispatch(fetchFootballPositions());
     dispatch(fetchFootballCategories());
-  }, [dispatch]);
+  }, [dispatch, params.slug]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {

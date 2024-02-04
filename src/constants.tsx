@@ -17,7 +17,7 @@ export const TEAM_SLUG_NAME = {
     slugName: 'SUB-15'
   },
   WOMEN: {
-    slug: 'women',
+    slug: 'senior-feminino',
     slugName: 'FEMININO'
   },
 }

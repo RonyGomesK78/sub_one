@@ -10,7 +10,7 @@ export default function Home() {
         <TeamCard
           name="FEMININO"
           image={femaleImage}
-          teamLink="/players/women"
+          teamLink="/players/senior-feminino"
         />
         <TeamCard
           name="SUB-15"
