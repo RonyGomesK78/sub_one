@@ -19,8 +19,8 @@ const initialState: PlayerState = {
   error: null,
 };
 
-export const fetchPlayers = createAsyncThunk('players/fetchPlayers', async () => {
-  const response = await axiosInstance.get('/players');
+export const fetchPlayers = createAsyncThunk('players/fetchPlayers', async (categoryId: string) => {
+  const response = await axiosInstance.get(`/players?category=${categoryId}`);
   
   return response.data;
 });
