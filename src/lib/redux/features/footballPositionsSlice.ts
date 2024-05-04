@@ -19,7 +19,11 @@ const initialState: FootballPositionState = {
 };
 
 export const fetchFootballPositions = createAsyncThunk('footballPositions/fetchfootballPositions', async () => {
-  const response = await axiosInstance.get('/football_positions');
+  const response = await axiosInstance.get('/football_positions', {
+    headers: {
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJmaXJzdG5hbWUiOiJSb255Iiwicm9sZXMiOlt7ImF1dGhvcml0eSI6Ik1BTkFHRVJfU1VCMTMifV0sImxhc3RuYW1lIjoiR29tZXMiLCJzdWIiOiJncm9taWx0b243QGdtYWlsLmNvbSIsImlhdCI6MTcxNDIxMTAwMCwiZXhwIjoxNzQ1NzQ3MDAwfQ.btGKL98aikakmTbi609qXLoEGh-YpLAssuakVy1TGw8"
+    }
+  });
   
   return response.data;
 });
