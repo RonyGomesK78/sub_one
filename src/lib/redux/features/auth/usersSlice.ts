@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '@/lib/axios/api';
-import { setCookie, parseCookies } from 'nookies'
+import { setCookie, parseCookies } from 'nookies';
 
 import { RootState } from '../../store';
 
@@ -24,11 +24,18 @@ const initialState: UserState = {
   error: null,
 };
 
+const setSession = () => {
+  const { 'subone.token': token } = parseCookies();
+  console.log("🚀 ~ setSession ~ token:", token)
+
+  axiosInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
+  console.log("axiosInstance.defaults.headers", axiosInstance.defaults.headers);
+};
+
 export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
+  setSession();
 
   const response = await axiosInstance.get('/auth/users');
-
-  
   console.log("🚀 ~ fetchUser ~ response:", response)
   
   return response.data;
@@ -39,11 +46,14 @@ export const login = createAsyncThunk('user/login', async (data: LoginUser) => {
 
   const { token } = response.data;
 
+  const oneYearInSeconds = 365 * 24 * 60 * 60;
+
   setCookie(undefined, 'subone.token', token, {
-    maxAge: 60 * 60 * 1, // 1 hour
+    maxAge: oneYearInSeconds
   });
 
-  axiosInstance.defaults.headers['Authorization'] = `Bearer ${token}`;
+  setSession();
+
   return response.data;
 });
 

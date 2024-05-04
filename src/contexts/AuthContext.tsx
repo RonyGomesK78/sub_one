@@ -1,8 +1,8 @@
 "use client";
 
 import { ReactNode, createContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { setCookie, parseCookies } from 'nookies'
+import { useRouter, usePathname } from 'next/navigation';
+import { parseCookies } from 'nookies';
 
 
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
@@ -31,8 +31,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const dispatch = useAppDispatch();
 
   const user = useAppSelector((state: RootState) => users(state));
+
+  const pathname = usePathname();
+  console.log("🚀 ~ AuthProvider ~ pathname:", pathname);
   const router = useRouter();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const isAuthenticated = user.status === 'succeeded' ? true : false;
+
+  console.log("🚀 ~ AuthProvider ~ isAuthenticated:", isAuthenticated)
 
   useEffect(() => {
 
@@ -46,22 +52,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (!token) {
       router.push('/auth/login');
     }
-
-    axiosInstance.defaults.headers['Authorization'] = `Bearer ${token}`;
-
     dispatch(fetchUser());
-    // if the token is present on the cookies then make a call to get the user information
-    // if is don't have it then redirect to the login page
-    console.log('Check if the user have the token');
-    console.log("🚀 ~ AuthProvider ~ user:", user);
-
-    // if (isAuthenticated === false) {
-    //   // router.push('/login');
-    //   console.log('not authenticated');
-    //   router.push('/auth/login');
-    // }
-    
   }, []);
+
+  useEffect(() => {
+    if (isAuthenticated && pathname === '/auth/login') {
+      router.push('/'); // Change '/dashboard' to the path you want authenticated users to be redirected to
+    }
+  }, [router, isAuthenticated]);
 
   async function signIn({ email, password }: SignInData) {
     console.log('loggedIn');
