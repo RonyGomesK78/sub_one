@@ -12,7 +12,7 @@ import LoginForm from '@/components/LoginForm';
 
 import { LoginUser } from '@/interfaces/User';
 
-import bg from '../../../assets/bgImage.jpg';
+import bg from '../../../../public/bgImage.jpg';
 import logo from '../../../assets/nuno rocha.png';
 import { RootState } from '@/lib/redux/store';
 import Toast from '@/components/Toast';
