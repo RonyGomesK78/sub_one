@@ -25,6 +25,7 @@ export function TeamCard(props: Team) {
           src={image}
           alt='team photo'
           className='w-fit rounded-md'
+          priority={true}
         />
         <div className='absolute bottom-0 left-0 right-0 bg-gray-800 bg-opacity-50 p-2 rounded-b-md'>
           <p className='w-fit font-bold text-white text-lg p-2 text-opacity-100 border-t-2 border-red-700'>{name}</p>

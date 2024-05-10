@@ -27,6 +27,7 @@ export function Header() {
             src={logo}
             alt='Logo'
             className='w-20'
+            priority={true}
           />
         </a>
 
@@ -38,6 +39,7 @@ export function Header() {
               src={isMenuClicked ? xCircleicon : menuIcon}
               alt='menu icon'
               className='w-12'
+              priority={true}
               onClick={handleOnMenuClick}
             />
         </div>
@@ -74,6 +76,7 @@ export function Header() {
             src={userIcon}
             alt='user profile icon'
             className='w-6'
+            priority={true}
           />
         </div>
       </div>

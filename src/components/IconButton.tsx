@@ -24,6 +24,7 @@ export function IconButton(props: Props) {
           alt={alt}
           src={src}
           className='w-4 cursor-pointer'
+          priority={true}
         />
       </div>
     </>

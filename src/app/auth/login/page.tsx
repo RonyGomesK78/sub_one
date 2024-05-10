@@ -54,6 +54,7 @@ export default function Login() {
               src={logo}
               alt='Logo'
               className='w-20'
+              priority={true}
             />
             <h1 className='font-bold text-xl mb-8'>EFNR</h1>
             <LoginForm handleLogin={handleLogin} />
