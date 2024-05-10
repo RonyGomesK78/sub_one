@@ -5,6 +5,7 @@ import { setCookie, parseCookies } from 'nookies';
 import { RootState } from '../../store';
 
 import { User, LoginUser } from '@/interfaces/User';
+import api from '@/lib/axios/api';
 
 interface UserState {
   data: User;
@@ -26,10 +27,8 @@ const initialState: UserState = {
 
 const setSession = () => {
   const { 'subone.token': token } = parseCookies();
-  console.log("🚀 ~ setSession ~ token:", token)
 
   axiosInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
-  console.log("axiosInstance.defaults.headers", axiosInstance.defaults.headers);
 };
 
 export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
@@ -42,17 +41,18 @@ export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
 });
 
 export const login = createAsyncThunk('user/login', async (data: LoginUser) => {
+  delete api.defaults.headers.common.Authorization;
   const response = await axiosInstance.post('/auth/authenticate', data);
 
   const { token } = response.data;
 
+  console.log("🚀 ~ login ~ token:", token)
+
   const oneYearInSeconds = 365 * 24 * 60 * 60;
 
   setCookie(undefined, 'subone.token', token, {
-    maxAge: oneYearInSeconds
+    maxAge: oneYearInSeconds, path: '/'
   });
-
-  setSession();
 
   return response.data;
 });

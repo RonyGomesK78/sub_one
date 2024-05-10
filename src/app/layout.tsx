@@ -32,7 +32,6 @@ export default function RootLayout({
       <body className={`${roboto.variable} ${baiJamjuree.variable} font-sans`}>
         <StoreProvider>
           <AuthProvider>
-            <Header />
             {children}
           </AuthProvider>
         </StoreProvider>

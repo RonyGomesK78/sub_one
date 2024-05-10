@@ -2,10 +2,12 @@ import { TeamCard } from "@/components/TeamCard";
 
 import femaleImage from '../assets/feminino.jpg';
 import sub13Image from "../assets/sub13.jpg";
+import { Header } from "@/components/Header";
 
 export default function Home() {
   return (
     <>
+      <Header />
       <div className="grid sm:grid-cols-2 gap-6 xl:mx-80 mx-2 p-4">
         <TeamCard
           name="FEMININO"

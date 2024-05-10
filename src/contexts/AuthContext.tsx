@@ -1,14 +1,12 @@
 "use client";
 
-import { ReactNode, createContext, useEffect, useState } from 'react';
+import { ReactNode, createContext, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { parseCookies } from 'nookies';
 
-
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
-import { fetchUser, users, login } from '@/lib/redux/features/auth/usersSlice';
+import { fetchUser, login, users } from '@/lib/redux/features/auth/usersSlice';
 import { RootState } from '@/lib/redux/store';
-import axiosInstance from '@/lib/axios/api';
 
 type SignInData = {
   email: string;
@@ -26,28 +24,20 @@ type AuthProviderProps = {
 
 export const AuthContext = createContext({} as AuthContextType)
 
-
 export function AuthProvider({ children }: AuthProviderProps) {
   const dispatch = useAppDispatch();
 
   const user = useAppSelector((state: RootState) => users(state));
 
   const pathname = usePathname();
-  console.log("🚀 ~ AuthProvider ~ pathname:", pathname);
   const router = useRouter();
 
-  const isAuthenticated = user.status === 'succeeded' ? true : false;
-
-  console.log("🚀 ~ AuthProvider ~ isAuthenticated:", isAuthenticated)
+  let isAuthenticated = user.status === 'succeeded' ? true : false;
 
   useEffect(() => {
 
-    // dispatch(login({ 
-    //   email: "kiro@gmail.com",
-    //   password: "!password78K"
-    // }));
-
     const { 'subone.token': token } = parseCookies();
+    console.log("🚀 ~ useEffect ~ token:", token)
 
     if (!token) {
       router.push('/auth/login');
@@ -56,13 +46,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   useEffect(() => {
+
     if (isAuthenticated && pathname === '/auth/login') {
       router.push('/'); // Change '/dashboard' to the path you want authenticated users to be redirected to
     }
-  }, [router, isAuthenticated]);
+  }, [router, user]);
+
+  useEffect(() => {
+
+    if (user.createdStatus === 'succeeded') {
+      dispatch(fetchUser());
+    }
+  }, [user.createdStatus]);
 
   async function signIn({ email, password }: SignInData) {
-    console.log('loggedIn');
+    dispatch(login({ email, password }));
   }
 
   return (
