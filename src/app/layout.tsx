@@ -7,6 +7,7 @@ import {
 
 import StoreProvider from './StoreProvider';
 import { Header } from '@/components/Header';
+import { AuthProvider } from '@/contexts/AuthContext';
 
 const roboto = Roboto({ subsets: ['latin'], variable: '--font-roboto' });
 
@@ -30,8 +31,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${roboto.variable} ${baiJamjuree.variable} font-sans`}>
         <StoreProvider>
-          <Header />
-          {children}
+          <AuthProvider>
+            {children}
+          </AuthProvider>
         </StoreProvider>
       </body>
     </html>

@@ -20,6 +20,7 @@ import { Guardian } from "@/interfaces/Guardian";
 import { PlayerRequest, PlayerResponse } from "@/interfaces/PlayerRequest";
 
 import mapTeamSlugName from "@/utils/mapTeamSlugName";
+import { Header } from "@/components/Header";
 
 interface Player {
   id: string;
@@ -100,6 +101,7 @@ export default function Team({ params }: { params: { slug: string } }) {
   else if (players.status === 'succeeded' && players.data.length === 0) {
     return (
       <>
+        <Header />
         <EmptyPlayers
           handleOpenModal={handleOpenModal}
         />
@@ -119,6 +121,7 @@ export default function Team({ params }: { params: { slug: string } }) {
 
   return (
     <>
+      <Header />
       <div className="flex justify-between">
         <div className="xl:mx-80 mx-4">
           <h1 className="font-semibold text-xl mt-4">Jogadores</h1>
@@ -134,7 +137,8 @@ export default function Team({ params }: { params: { slug: string } }) {
         </div>
       </div>
       <div className="overflow-x-auto shadow-inner xl:mx-80 m-4">
-        <PlayersTable 
+        <PlayersTable
+          // add key
           players={players.data as unknown as PlayerResponse []}
           handlePlayerDetailOpen={handlePlayerDetailsOpen}
         />

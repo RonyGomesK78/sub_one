@@ -5,6 +5,8 @@ import { RootState } from '../store';
 
 import { PlayerRequest, PlayerResponse } from '@/interfaces/PlayerRequest';
 
+import addAuthHeader from '../../../utils/addAuthHeader';
+
 interface PlayerState {
   data: PlayerResponse[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
@@ -20,6 +22,8 @@ const initialState: PlayerState = {
 };
 
 export const fetchPlayers = createAsyncThunk('players/fetchPlayers', async (categoryId: string) => {
+  addAuthHeader();
+
   const response = await axiosInstance.get(`/players?category=${categoryId}`);
   
   return response.data;
