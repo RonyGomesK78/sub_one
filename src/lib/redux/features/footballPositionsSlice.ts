@@ -6,6 +6,8 @@ import { RootState } from '../store';
 
 import { FootballPosition } from '@/interfaces/FootballPosition';
 
+import addAuthHeader from '../../../utils/addAuthHeader';
+
 interface FootballPositionState {
   data: FootballPosition[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
@@ -19,6 +21,7 @@ const initialState: FootballPositionState = {
 };
 
 export const fetchFootballPositions = createAsyncThunk('footballPositions/fetchfootballPositions', async () => {
+  addAuthHeader();
   const response = await axiosInstance.get('/football_positions');
   
   return response.data;

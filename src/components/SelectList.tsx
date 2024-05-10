@@ -15,7 +15,7 @@ const SelectList: React.FC<SelectListProps> = (props) => {
   
   return (
     <select
-      className="block w-full p-4 h-14 mt-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-blue-300"
+      className="block w-full p-4 h-14 mt-2 bg-white border border-gray-300 rounded-md shadow-lg focus:outline-blue-300"
       id={id}
       name={name}
       onChange={handleChange}

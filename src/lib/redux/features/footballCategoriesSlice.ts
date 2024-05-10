@@ -5,6 +5,9 @@ import axiosInstance from '@/lib/axios/api';
 
 import { FootballCategory } from '@/interfaces/FootballCategory';
 
+import addAuthHeader from '../../../utils/addAuthHeader';
+
+
 interface FootballCategoryState {
   data: FootballCategory[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
@@ -18,6 +21,8 @@ const initialState: FootballCategoryState = {
 };
 
 export const fetchFootballCategories = createAsyncThunk('footballCategories/fetchfootballCategories', async () => {
+  addAuthHeader();
+
   const response = await axiosInstance.get('/football_categories');
   
   return response.data;

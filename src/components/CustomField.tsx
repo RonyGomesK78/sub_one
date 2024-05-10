@@ -19,7 +19,7 @@ const CustomField: React.FC<CustomFieldProps> = (props) => {
       type={type}
       id={id}
       name={name}
-      className={`border border-gray-300 p-4 mt-2 rounded-md ${width} ${textAlign} focus:outline-blue-300`}
+      className={`border border-gray-300 p-4 mt-2 rounded-md ${width} ${textAlign} focus:outline-blue-300 shadow-lg`}
       placeholder={placeholder}
       disabled={disabled}
     />
