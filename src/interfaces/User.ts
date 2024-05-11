@@ -15,4 +15,5 @@ export interface User {
   token: string,
   firstname: string,
   lastname: string,
+  sub: string,
 };

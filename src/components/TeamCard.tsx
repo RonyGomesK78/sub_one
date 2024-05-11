@@ -16,7 +16,7 @@ export function TeamCard(props: Team) {
   } = props;
 
   return (
-    <div className='relative rounded-md shadow-lg'>
+    <div className='relative rounded-md shadow-2xl'>
       <Link
         href={teamLink}
         className='rounded-md'

@@ -4,9 +4,9 @@ import { ReactNode, createContext, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { parseCookies } from 'nookies';
 
-import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
-import { fetchUser, login, users } from '@/lib/redux/features/auth/usersSlice';
 import { RootState } from '@/lib/redux/store';
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
+import { fetchUser, login, logout, users } from '@/lib/redux/features/auth/usersSlice';
 
 type SignInData = {
   email: string;
@@ -14,8 +14,14 @@ type SignInData = {
 }
 
 type AuthContextType = {
+  userObject: {
+    firstname: string,
+    lastname: string,
+    email: string
+  };
   isAuthenticated: boolean;
   signIn: (data: SignInData) => Promise<void>
+  signOut: () => Promise<void>
 }
 
 type AuthProviderProps = {
@@ -33,11 +39,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const router = useRouter();
 
   let isAuthenticated = user.status === 'succeeded' ? true : false;
+  const userObject = {
+    firstname: user.data.firstname,
+    lastname: user.data.lastname,
+    email: user.data.sub,
+  };
 
   useEffect(() => {
 
     const { 'subone.token': token } = parseCookies();
-    console.log("🚀 ~ useEffect ~ token:", token)
 
     if (!token) {
       router.push('/auth/login');
@@ -46,7 +56,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   useEffect(() => {
-
     if (isAuthenticated && pathname === '/auth/login') {
       router.push('/'); // Change '/dashboard' to the path you want authenticated users to be redirected to
     }
@@ -63,8 +72,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
     dispatch(login({ email, password }));
   }
 
+  async function signOut() {
+    dispatch(logout());
+    router.push('/auth/login');
+  }
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, signIn }}>
+    <AuthContext.Provider value={{ isAuthenticated, signIn, signOut, userObject }}>
       {children}
     </AuthContext.Provider>
   )
