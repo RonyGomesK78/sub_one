@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '@/lib/axios/api';
-import { setCookie, parseCookies } from 'nookies';
+import { setCookie, parseCookies, destroyCookie } from 'nookies';
 
 import { RootState } from '../../store';
 
@@ -11,6 +11,7 @@ interface UserState {
   data: User;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   createdStatus: 'idle' | 'loading' | 'succeeded' | 'failed';
+  logoutStatus: 'idle' | 'succeeded';
   error: string | null;
 }
 
@@ -18,10 +19,12 @@ const initialState: UserState = {
   data: {
     firstname: '',
     lastname: '',
+    sub: '',
     token: '',
   },
   status: 'idle',
   createdStatus: 'idle',
+  logoutStatus: 'idle',
   error: null,
 };
 
@@ -35,7 +38,6 @@ export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
   setSession();
 
   const response = await axiosInstance.get('/auth/users');
-  console.log("🚀 ~ fetchUser ~ response:", response)
   
   return response.data;
 });
@@ -46,8 +48,6 @@ export const login = createAsyncThunk('user/login', async (data: LoginUser) => {
 
   const { token } = response.data;
 
-  console.log("🚀 ~ login ~ token:", token)
-
   const oneYearInSeconds = 365 * 24 * 60 * 60;
 
   setCookie(undefined, 'subone.token', token, {
@@ -55,6 +55,12 @@ export const login = createAsyncThunk('user/login', async (data: LoginUser) => {
   });
 
   return response.data;
+});
+
+export const logout = createAsyncThunk('user/logout', async () => {
+  delete api.defaults.headers.common.Authorization;
+  destroyCookie(null, 'subone.token', { path: '/' });
+  return;
 });
 
 const usersSlice = createSlice({
@@ -84,6 +90,17 @@ const usersSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.createdStatus = 'failed';
         state.error = action.error.message || null;
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.logoutStatus = 'succeeded';
+        state.createdStatus = 'idle';
+        state.status = 'idle';
+        state.data = {
+          firstname: '',
+          lastname: '',
+          sub: '',
+          token: '',
+        }
       });
   },
 });
