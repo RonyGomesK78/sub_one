@@ -39,7 +39,6 @@ export default function LoginForm({ handleLogin }: Props) {
           { setSubmitting }: FormikHelpers<Schema>
         ) => {
           try {
-            
             handleLogin(values);
           } catch (e) {
             console.error('r78k', e);
@@ -50,7 +49,7 @@ export default function LoginForm({ handleLogin }: Props) {
         {({ handleChange }) => (
           <Form className="w-full px-4">
             <div className="mb-4 px-4 ">
-              <label htmlFor="email" className="block text-gray-700 font-semibold">
+              <label htmlFor="email" className="block text-gray-700 font-semibold text-sm">
                 Email
               </label>
               <CustomField
@@ -63,13 +62,13 @@ export default function LoginForm({ handleLogin }: Props) {
             </div>
 
             <div className="mb-4 px-4">
-              <label htmlFor="password" className="block text-gray-700 font-semibold">
+              <label htmlFor="password" className="block text-gray-700 font-semibold text-sm">
                 Password
               </label>
               <CustomField
                 id="password"
                 name="password"
-                type="text"
+                type="password"
                 placeholder="Password"
               />
               <CustomErrorMessageField name="password" />

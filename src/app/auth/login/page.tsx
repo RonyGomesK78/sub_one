@@ -1,21 +1,29 @@
 "use client";
 
 import { useEffect, useContext, useState } from 'react';
+
 import Image from 'next/image';
+
 import { useAppSelector } from "@/lib/redux/hooks";
-import { AuthContext } from '@/contexts/AuthContext';
-import { users } from '@/lib/redux/features/auth/usersSlice';
-import LoginForm from '@/components/LoginForm';
-import { LoginUser } from '@/interfaces/User';
-import bg from '../../../../public/bgImage.jpg';
-import logo from '../../../assets/nuno rocha.png';
 import { RootState } from '@/lib/redux/store';
+import { users } from '@/lib/redux/features/auth/usersSlice';
+
+import { AuthContext } from '@/contexts/AuthContext';
+
+import LoginForm from '@/components/LoginForm';
 import Toast from '@/components/Toast';
+import Loading from '@/components/Loading';
+
+import { LoginUser } from '@/interfaces/User';
+
+import logo from '../../../assets/nuno rocha.png';
+import bg from '../../../../public/bg2.jpg';
 
 export default function Login() {
   const { signIn } = useContext(AuthContext);
   const user = useAppSelector((state: RootState) => users(state));
   const [showToast, setShowToast] = useState(false);
+  const [bgLoaded, setBgLoaded] = useState(false);
 
   const handleLogin = (data: LoginUser) => {
     signIn({
@@ -38,6 +46,10 @@ export default function Login() {
     return () => clearTimeout(timeout);
   }, [showToast]);
 
+  const handleBgLoadComplete = () => {
+    setBgLoaded(true);
+  }
+
   return (
     <>
       <div className="flex justify-center h-screen relative">
@@ -46,19 +58,27 @@ export default function Login() {
           alt='Background Image'
           priority={true}
           fill={true}
+          onLoadingComplete={handleBgLoadComplete}
         />
-        <div className="absolute inset-0 flex justify-center items-center">
-          <div className="flex flex-col justify-center items-center bg-white py-10 rounded shadow-lg md:w-3/4 lg:w-3/5 xl:w-2/5 2xl:w-1/4 w-full">
-            <Image
-              src={logo}
-              alt='Logo'
-              className='w-20'
-              priority={true}
-            />
-            <h1 className='font-bold text-xl mb-8'>EFNR</h1>
-            <LoginForm handleLogin={handleLogin} />
+        {!bgLoaded && (
+          <div className="absolute inset-0 flex justify-center items-center bg-white">
+            <Loading />
           </div>
-        </div>
+        )}
+        {bgLoaded && (
+          <div className="absolute inset-0 flex justify-center items-center">
+            <div className="flex flex-col justify-center items-center bg-white py-10 rounded shadow-2xl md:w-3/4 lg:w-3/5 xl:w-2/5 2xl:w-1/4 w-full">
+              <Image
+                src={logo}
+                alt='Logo'
+                className='w-20'
+                priority={true}
+              />
+              <h1 className='font-bold text-xl mb-8'>EFNR</h1>
+              <LoginForm handleLogin={handleLogin} />
+            </div>
+          </div>
+        )}
       </div>
       <Toast 
         message={"Credências inválidas"}
