@@ -23,7 +23,7 @@ const initialState: FootballCategoryState = {
 export const fetchFootballCategories = createAsyncThunk('footballCategories/fetchfootballCategories', async () => {
   addAuthHeader();
 
-  const response = await axiosInstance.get('/football_categories');
+  const response = await axiosInstance.get('/football_categories/api/v1');
   
   return response.data;
 });

@@ -37,14 +37,14 @@ const setSession = () => {
 export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
   setSession();
 
-  const response = await axiosInstance.get('/auth/users');
+  const response = await axiosInstance.get('/auth/users/api/v1');
   
   return response.data;
 });
 
 export const login = createAsyncThunk('user/login', async (data: LoginUser) => {
   delete api.defaults.headers.common.Authorization;
-  const response = await axiosInstance.post('/auth/authenticate', data);
+  const response = await axiosInstance.post('/auth/authenticate/api/v1', data);
 
   const { token } = response.data;
 

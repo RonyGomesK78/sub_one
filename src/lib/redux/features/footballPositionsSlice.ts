@@ -22,7 +22,7 @@ const initialState: FootballPositionState = {
 
 export const fetchFootballPositions = createAsyncThunk('footballPositions/fetchfootballPositions', async () => {
   addAuthHeader();
-  const response = await axiosInstance.get('/football_positions');
+  const response = await axiosInstance.get('/football_positions/api/v1');
   
   return response.data;
 });

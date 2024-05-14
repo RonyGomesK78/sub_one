@@ -21,7 +21,7 @@ const initialState: PlayerState = {
   error: null,
 };
 
-export const fetchPlayers = createAsyncThunk('players/fetchPlayers', async (categoryId: string) => {
+export const fetchPlayers = createAsyncThunk('players/fetchPlayers/api/v1', async (categoryId: string) => {
   addAuthHeader();
 
   const response = await axiosInstance.get(`/players?category=${categoryId}`);
@@ -29,7 +29,7 @@ export const fetchPlayers = createAsyncThunk('players/fetchPlayers', async (cate
   return response.data;
 });
 
-export const addPlayer = createAsyncThunk('players/addPlayer', async (data: PlayerRequest, { getState }) => {
+export const addPlayer = createAsyncThunk('players/addPlayer/api/v1', async (data: PlayerRequest, { getState }) => {
   const response = await axiosInstance.post('/players', data);
 
   const currentState = (getState() as RootState).players;
