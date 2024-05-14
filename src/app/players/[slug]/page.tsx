@@ -138,7 +138,6 @@ export default function Team({ params }: { params: { slug: string } }) {
       </div>
       <div className="overflow-x-auto shadow-inner xl:mx-80 m-4">
         <PlayersTable
-          // add key
           players={players.data as unknown as PlayerResponse []}
           handlePlayerDetailOpen={handlePlayerDetailsOpen}
         />

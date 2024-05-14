@@ -3,7 +3,9 @@ import { Header } from "@/components/Header";
 
 import sub6Image from '../../public/sub6.jpeg';
 import femaleImage from '../assets/feminino.jpg';
-import sub13Image from "../assets/sub13.jpg";
+import sub13Image from "../../public/sub13.jpeg";
+import sub15Image from "../assets/sub13.jpg";
+import sub11Image from "../assets/sub13.jpg";
 
 export default function Home() {
   return (
@@ -17,7 +19,7 @@ export default function Home() {
         />
         <TeamCard
           name="SUB-15"
-          image={sub13Image}
+          image={sub15Image}
           teamLink="/players/sub-15"
         />
         <TeamCard
@@ -27,7 +29,7 @@ export default function Home() {
         />
         <TeamCard
           name="SUB-11"
-          image={sub13Image}
+          image={sub11Image}
           teamLink="/players/sub-11"
         />
         <TeamCard

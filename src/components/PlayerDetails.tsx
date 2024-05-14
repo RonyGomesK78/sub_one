@@ -48,12 +48,10 @@ const PlayerDetails = ({
 
   const renderGuardians = (guardians: Guardian[]): ReactNode[] => {
     return guardians.map(guardian => (
-      <>
-        <div className="flex justify-between border shadow-md  p-4 mb-2 text-sm">
-          <p>{guardian.name}</p>
-          <p className="text-right">{guardian.countryCode} {guardian.phoneNumber}</p>
-        </div>
-      </>
+      <div key={guardian.id} className="flex justify-between border shadow-md  p-4 mb-2 text-sm">
+        <p>{guardian.name}</p>
+        <p className="text-right">{guardian.countryCode} {guardian.phoneNumber}</p>
+      </div>
     ))
   };
 

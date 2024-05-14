@@ -21,14 +21,16 @@ export default function PlayersTable(props: { players: PlayerResponse[]; handleP
 
   const tableBody = () => {
     
-    return players.map((player) => {
-      // I know I can remove the return below
+    return players.map((player, index) => {
       return (
         <tr 
           key={player.id} 
           className="bg-gray-100 border-white border-y-8 cursor-pointer hover:bg-gray-300"
           onClick={() => handlePlayerDetailOpen(player)}
         >
+          <td className="text-left whitespace-nowrap p-8">
+            {++index}
+          </td>
           <td className="text-left whitespace-nowrap p-8">
             {player.genre}
           </td>
@@ -59,6 +61,7 @@ export default function PlayersTable(props: { players: PlayerResponse[]; handleP
     <table className="table-auto w-full">
       <thead>
         <tr className="text-gray-400 ">
+          <th className="text-left pl-8 pt-3 align-middle">#</th>
           <th className="text-left pl-8 pt-3 align-middle">SEXO</th>
           <th className="text-left whitespace-nowrap pt-3 px-4">NOME</th>
           <th className="text-left whitespace-nowrap pt-3 px-4">ALCUNHA</th>
